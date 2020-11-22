@@ -1,0 +1,102 @@
+{
+ "metadata": {
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.5-final"
+  },
+  "orig_nbformat": 2,
+  "kernelspec": {
+   "name": "python3",
+   "display_name": "Python 3.8.5 64-bit ('env')",
+   "metadata": {
+    "interpreter": {
+     "hash": "40d6cd9dbfc4b8b6b06e392741f25a9514c9f8680759cabfed4b5585f2dda016"
+    }
+   }
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2,
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%run ./util.ipynb"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "path_startup = \"/home/alex/vscode/data/crunchbase/startups/*.csv\"\n",
+    "df_startup = concat_files(path_startup)\n",
+    "df_startup.drop_duplicates(subset=['Organization Name'], inplace=True)\n",
+    "df_startup.to_csv(\"/home/alex/vscode/data/crunchbase/consolidado/startups.csv\")\n",
+    "# path_aquisicoes = \"/home/alex/vscode/data/crunchbase/aquisicoes/*.csv\"\n",
+    "# df = concat_files(path_aquisicoes)\n",
+    "# df.to_csv(\"/home/alex/vscode/data/crunchbase/consolidado/aquisicoes.csv\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_startup = pd.read_csv(\"/home/alex/vscode/data/crunchbase/consolidado/startups.csv\", engine='python')\n",
+    "del df_startup['Unnamed: 0']\n",
+    "df_aquisicoes = pd.read_csv(\"/home/alex/vscode/data/crunchbase/consolidado/aquisicoes.csv\", engine='python')\n",
+    "del df_aquisicoes['Unnamed: 0']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {},
+   "outputs": [
+    {
+     "output_type": "execute_result",
+     "data": {
+      "text/plain": [
+       "0"
+      ]
+     },
+     "metadata": {},
+     "execution_count": 36
+    }
+   ],
+   "source": [
+    "df_startup.duplicated(subset=['Organization Name']).sum()\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ]
+}
