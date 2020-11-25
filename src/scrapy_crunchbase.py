@@ -65,8 +65,8 @@ class crawler():
                     shutil.move(filename, dest_file)
 
     def search_startup(self, threshold, start_founded, end_founded):
-        dates_founded = pd.date_range(start=start_founded, end=end_founded, freq="1M")
-        status = wait_element(self.driver, "//search-date//input[@type='search']", by=By.XPATH, to_sleep=5)
+        dates_founded = pd.date_range(start=start_founded, end=end_founded, freq="3M")
+        status = wait_element(self.driver, "//search-date//input[@type='search']", by=By.XPATH, to_sleep=10)
         ins_search = self.driver.find_elements_by_xpath("//search-date//input[@type='search']")
         for sa, ea in zip(dates_founded[0:-1], dates_founded[1:]):
             in_start_announced = ins_search[0]
@@ -78,7 +78,7 @@ class crawler():
             wait_element(self.driver, '//button[@aria-label="Search"]', by=By.XPATH, to_sleep=2)
             button_search = self.driver.find_element_by_xpath('//button[@aria-label="Search"]')
             button_search.click()
-            wait_element(self.driver, '//div[@class="cb-overflow-ellipsis"]', by=By.XPATH, to_sleep=1)
+            wait_element(self.driver, '//div[@class="cb-overflow-ellipsis"]', by=By.XPATH, to_sleep=2)
             nresults = int(self.driver.find_element_by_xpath("//results-info[@class='flex-none hide show-gt-xs']/h3").text.split(" ")[-2].replace(",", ""))
             if nresults > threshold:
                 print(f"{sa.strftime('%Y/%m/%d')}, {ea.strftime('%Y/%m/%d')}. {nresults} > {threshold}")
@@ -109,7 +109,7 @@ class crawler():
         if type == "funding":
             self.search_funding(1000, "2015/01/01", "2020/01/01", "2015/01/01", "2018/01/01")
         elif type == "startups":
-            self.search_startup(1000, "2006/01/01", "2019/06/01")
+            self.search_startup(1000, "2016/01/01", "2019/09/01")
 
 
 if __name__ == '__main__':
